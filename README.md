@@ -51,7 +51,7 @@ At the very beginning I failed to set Gradle synced since it cannot resolve some
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2019] [Peiyuan Ma]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
