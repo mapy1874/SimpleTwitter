@@ -34,4 +34,13 @@
         android:layout_marginTop="2dp"
         android:layout_toEndOf="@+id/ivProfileImage"
         tools:text="This is my tweet!!!!!" />
+
+    <TextView
+        android:id="@+id/tvRelativeDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="0dp"
+        tools:text="39min" />
 </RelativeLayout>
