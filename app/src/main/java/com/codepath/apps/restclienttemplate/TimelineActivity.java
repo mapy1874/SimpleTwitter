@@ -156,7 +156,7 @@ public class TimelineActivity extends AppCompatActivity {
             // Modify data source of tweets
             tweets.add(0,tweet);
             adapter.notifyItemInserted(0);
-            //rvTweets.smoothScrollToPosition(0);
+            rvTweets.smoothScrollToPosition(0);
         }
         super.onActivityResult(requestCode,resultCode,data);
     }
