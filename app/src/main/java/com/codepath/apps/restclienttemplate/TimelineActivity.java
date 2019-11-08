@@ -19,6 +19,7 @@ import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -151,7 +152,7 @@ public class TimelineActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK&&requestCode==COMPOSE_ACTIVITY_REQUEST_CODE){
             // Get data from the intent (tweet)
-            Tweet tweet = data.getParcelableExtra("tweet");
+            Tweet tweet = Parcels.unwrap(data.getParcelableExtra("tweet"));
             // update the RV with the tweet
             // Modify data source of tweets
             tweets.add(0,tweet);

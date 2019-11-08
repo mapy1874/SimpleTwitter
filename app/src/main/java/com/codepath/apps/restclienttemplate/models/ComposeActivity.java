@@ -3,13 +3,17 @@ package com.codepath.apps.restclienttemplate.models;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.R;
@@ -24,6 +28,7 @@ import okhttp3.Headers;
 
 public class ComposeActivity extends AppCompatActivity {
     EditText etCompose;
+    TextView tvCounter;
     Button btnTweet;
     TwitterClient client;
     public static final String TAG = "ComposeActivity";
@@ -34,6 +39,7 @@ public class ComposeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_compose);
         etCompose = findViewById(R.id.etCompose);
         btnTweet = findViewById(R.id.btnTweet);
+        tvCounter = findViewById(R.id.tvCounter);
         client = TwitterApp.getRestClient(this);
         // set click listener on button
         btnTweet.setOnClickListener(new View.OnClickListener() {
@@ -75,5 +81,33 @@ public class ComposeActivity extends AppCompatActivity {
                 Toast.makeText(ComposeActivity.this, tweetContent, Toast.LENGTH_LONG).show();
             }
         });
+
+        etCompose.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                tvCounter.setText(s.toString().length() + "/140");
+                if (s.toString().length() > 140 ) {
+                    // alert the user to delete the exceeded characters
+                    tvCounter.setTextColor(Color.RED);
+                }
+                else if (s.toString().length() <= 140 ) {
+                    // alert the user to delete the exceeded characters
+                    tvCounter.setTextColor(Color.GRAY);
+                }
+            }
+        });
+
     }
+
+
 }

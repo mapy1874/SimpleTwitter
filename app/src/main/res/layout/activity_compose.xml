@@ -6,15 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".models.ComposeActivity">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/txlCompose"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:counterEnabled="true"
-        app:counterMaxLength="140"
-        app:counterOverflowTextAppearance="@style/counterOverride"
-        app:counterTextAppearance="@style/counterText">
-
         <EditText
             android:id="@+id/etCompose"
             android:layout_width="397dp"
@@ -35,15 +26,24 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnTweet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txlCompose"
+        android:layout_below="@+id/etCompose"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="5dp"
         android:text="@string/tweet" />
+
+    <TextView
+        android:id="@+id/tvCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etCompose"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="5dp"
+        android:text="0/140" />
 </RelativeLayout>
