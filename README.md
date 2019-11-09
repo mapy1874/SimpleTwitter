@@ -41,7 +41,7 @@ The following **bonus** features are implemented:
 - [ ] User can see embedded image media within the tweet detail view
 - [ ] Use the popular ButterKnife annotation library to reduce view boilerplate.
 - [ ] On the Twitter timeline, leverage the [CoordinatorLayout](http://guides.codepath.org/android/Handling-Scrolls-with-CoordinatorLayout#responding-to-scroll-events) to apply scrolling behavior that [hides / shows the toolbar](http://guides.codepath.org/android/Using-the-App-ToolBar#reacting-to-scroll).
-- [ ] User can **open the twitter app offline and see last loaded tweets**. Persisted in SQLite tweets are refreshed on every application launch. While "live data" is displayed when app can get it from Twitter API, it is also saved for use in offline mode.
+- [x] User can **open the twitter app offline and see last loaded tweets**. Persisted in SQLite tweets are refreshed on every application launch. While "live data" is displayed when app can get it from Twitter API, it is also saved for use in offline mode.
 
 The following **additional** features are implemented:
 
@@ -61,6 +61,8 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 - At the very beginning I failed to set Gradle synced since it cannot resolve some dependency. By changing some code into a lower version and clean-rebuild-resync, I finall succeed.
 - Did not know how to use a comstomized edit icon at first an find the recource in drawable for a long time, but it turned out use recources in mipmap is the right choice.
 - Did not unwrap the parceled twitter in TimelineActivity and it take me a while to debug and find the issue
+- Stopped at the persistence part for a long time. I tried to resolve it by understanding Room, DAO and the error was at the MyDatabase.java: I did not add SampleModel into entities
+- After polishing the login UI, I found I cannot login after click on the login button, which was caused by no network of the phone
 
 ## Open-source libraries used
 
