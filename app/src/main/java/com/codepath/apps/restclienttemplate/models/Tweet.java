@@ -27,7 +27,7 @@ public class Tweet {
 
     @ColumnInfo
     public String body;
-
+   
     @ColumnInfo
     public String createdAt;
 
