@@ -38,6 +38,7 @@ public class Tweet {
     @Ignore
     public User user;
 
+
     // Empty constructor needed by parceler library
     public Tweet(){}
 
@@ -49,6 +50,7 @@ public class Tweet {
         User user = User.fromJson(jsonObject.getJSONObject("user"));
         tweet.user = user;
         tweet.userId = user.id;
+
         return tweet;
     }
 
