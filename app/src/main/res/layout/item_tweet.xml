@@ -33,11 +33,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvScreenName"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="3dp"
         android:layout_toEndOf="@+id/ivProfileImage"
         android:autoLink="all"
-        android:textColorLink= "#38A1F3"
         android:linksClickable="true"
+        android:textColorLink="#38A1F3"
         tools:text="This is my tweet!!!!!" />
 
     <TextView
@@ -59,4 +59,13 @@
         android:textStyle="bold"
         android:layout_toEndOf="@+id/ivProfileImage"
         tools:text="Peiyuan Ma" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.2dp"
+        android:layout_below="@+id/tvBody"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/darker_gray" />
+
 </RelativeLayout>
+

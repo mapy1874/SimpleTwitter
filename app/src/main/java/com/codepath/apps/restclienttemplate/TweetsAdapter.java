@@ -19,6 +19,8 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
 public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder> {
 
     Context context;
@@ -86,7 +88,10 @@ public class TweetsAdapter extends RecyclerView.Adapter<TweetsAdapter.ViewHolder
             tvScreenName.setText("@"+tweet.user.screenName);
             tvName.setText(tweet.user.name);
             tvRelativeDate.setText(getRelativeTimeAgo(tweet.createdAt));
-            Glide.with(context).load(tweet.user.publicImageUrl).into(ivProfileImage);
+            Glide.with(context)
+                    .load(tweet.user.publicImageUrl)
+                    .transform(new RoundedCornersTransformation(100, 0))
+                    .into(ivProfileImage);
         }
         // getRelativeTimeAgo("Mon Apr 01 21:16:23 +0000 2014");
         public String getRelativeTimeAgo(String rawJsonDate) {

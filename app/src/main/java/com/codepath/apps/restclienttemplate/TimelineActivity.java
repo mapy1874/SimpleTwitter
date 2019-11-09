@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -15,6 +16,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.codepath.apps.restclienttemplate.models.ComposeActivity;
 import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.codepath.apps.restclienttemplate.models.TweetDao;
+import com.codepath.apps.restclienttemplate.models.TweetWithUser;
+import com.codepath.apps.restclienttemplate.models.MyDatabase;
+import com.codepath.apps.restclienttemplate.models.User;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -35,6 +40,7 @@ public class TimelineActivity extends AppCompatActivity {
     TweetsAdapter adapter;
     SwipeRefreshLayout swipeContainer;
     EndlessRecyclerViewScrollListener scrollListener;
+    TweetDao tweetDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +78,23 @@ public class TimelineActivity extends AppCompatActivity {
                 loadMoreData();
             }
         };
+        tweetDao = ((TwitterApp) getApplicationContext()).getMyDatabase().tweetDao();
         // Adds the scroll listener to RecyclerView
         rvTweets.addOnScrollListener(scrollListener);
+        // Remember to always move DB queries off of the Main thread
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                // Request list of tweets with Users using DAO
+                List<TweetWithUser> tweetFromDatabase = tweetDao.recentItems();
+                adapter.clear();
+                Log.i(TAG,"Showing data from database");
+
+                // TweetWithUser has to be converted Tweet objects with nested User objects (see next snippet)
+                List<Tweet> tweetList = TweetWithUser.getTweetList(tweetFromDatabase);
+                adapter.addAll(tweetList);
+            }
+        });
         populateHomeTimeLine();
     }
 
@@ -86,7 +107,27 @@ public class TimelineActivity extends AppCompatActivity {
                 try {
                     Log.i("Peiyuan","populateHomeTimeLine onSuccess");
                     adapter.clear();
-                    adapter.addAll(Tweet.fromJsonArray(jsonArray));
+                    final List<Tweet> freshTweets = Tweet.fromJsonArray(json.jsonArray);
+                    final List<User> freshUsers = User.fromJsonTweetArray(freshTweets);
+                    adapter.addAll(freshTweets);
+
+                    // Saving data into our database
+                    // Interaction with database cannot happen on the Main Thread
+                    AsyncTask.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            // runInTransaction() allows to perform multiple db actions in a batch thus preserving consistency
+                            ((TwitterApp) getApplicationContext()).getMyDatabase().runInTransaction(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // Inserting both Tweets and Users to their respective tables
+                                    // insert user first to make ForeignKey work
+                                    tweetDao.insertModel(freshUsers.toArray(new User[0]));
+                                    tweetDao.insertModel(freshTweets.toArray(new Tweet[0]));
+                                }
+                            });
+                        }
+                    });
                     // Now we call setRefreshing(false) to signal refresh has finished
                     swipeContainer.setRefreshing(false);
                 } catch (JSONException e) {

@@ -5,6 +5,8 @@ import android.content.Context;
 
 import androidx.room.Room;
 
+import com.codepath.apps.restclienttemplate.models.MyDatabase;
+import com.codepath.apps.restclienttemplate.models.MyDatabase;
 import com.facebook.stetho.Stetho;
 
 /*
@@ -18,15 +20,15 @@ import com.facebook.stetho.Stetho;
  */
 public class TwitterApp extends Application {
 
-    MyDatabase myDatabase;
+    MyDatabase twitterDatabase;
 
     @Override
     public void onCreate() {
         super.onCreate();
         // when upgrading versions, kill the original tables by using
 		// fallbackToDestructiveMigration()
-        myDatabase = Room.databaseBuilder(this, MyDatabase.class,
-                MyDatabase.NAME).fallbackToDestructiveMigration().build();
+        twitterDatabase = Room.databaseBuilder(this, MyDatabase.class,
+                                               MyDatabase.NAME).fallbackToDestructiveMigration().build();
 
         // use chrome://inspect to inspect your SQL database
         Stetho.initializeWithDefaults(this);
@@ -37,6 +39,6 @@ public class TwitterApp extends Application {
     }
 
     public MyDatabase getMyDatabase() {
-        return myDatabase;
+        return twitterDatabase;
     }
 }
